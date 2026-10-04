@@ -60,18 +60,18 @@ function random(num) {
     return Math.ceil(Math.random() * num);
 }
 
+function fight(damage) {
+    changeHP(random(damage), character);
+    changeHP(random(damage), enemy1);
+    changeHP(random(damage), enemy2);
+}
+
 $btn.addEventListener('click', function () {
-    console.log('Kick: Thunder Jolt');
-    changeHP (random(20), character);
-    changeHP (random(20), enemy1);
-    changeHP (random(20), enemy2);
+    fight(20);
 });
 
 $btnSuper.addEventListener('click', function () {
-    console.log('Super Kick: Thunderbolt');
-    changeHP (random(25), character);
-    changeHP (random(35), enemy1);
-    changeHP (random(35), enemy2);
+    fight(50);
 });
 
 init();
