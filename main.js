@@ -81,10 +81,12 @@ function fight(damage) {
 }
 
 $btn.addEventListener('click', function () {
+    console.log('Kick');
     fight(20);
 });
 
 $btnSuper.addEventListener('click', function () {
+        console.log('Super Kick');
     fight(50);
 });
 
