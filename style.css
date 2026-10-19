@@ -10,15 +10,17 @@ html, body {
 body {
     color: black;
     position: relative;
-    background: red;
-    background: linear-gradient(45deg, #d2ffde, #ceefff, #ded1ff);
-    background-size: cover;
-    background-repeat: no-repeat;
     padding: 0;
+    margin: 0;
     font-family: "Heebo", sans-serif;
-    background: url(./assets/Parkscene_Background.png) center bottom repeat-x, url(./assets/SkyDay.png) center top / cover;
     text-align: center;
     user-select: none;
+
+    background-image: url(./assets/Parkscene_Background.png), url(./assets/SkyDay.png);
+    background-position: center bottom, center top;
+    background-repeat: repeat-x, no-repeat;
+    background-size: auto, cover;
+    background-attachment: fixed, fixed; /* Запобігає зміщенню при зміні висоти */
 }
 
 .catch_screen {
@@ -508,7 +510,7 @@ h1 {
     overflow-y: scroll;
     text-align: left;
     position: relative;
-    z-index: 2;         /* щоб блок гарантовано був вище за всі фони */
+    z-index: 2;         
 }
 
 #logs p {
