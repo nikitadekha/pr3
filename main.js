@@ -2,7 +2,43 @@ const $btn = document.getElementById('btn-kick');
 const $btnSuper = document.getElementById('btn-super');
 const $logs = document.querySelector('#logs');
 
-function generateLog(firstPerson, secondPerson, count) {
+const character = {
+    name: 'Pikachu',
+    defaultHP: 100,
+    damageHP: 100,
+    elHP: document.getElementById('health-character'),
+    elProgressbar: document.getElementById('progressbar-character'),
+    renderHP,
+    renderHPLife,
+    renderProgressbarHP,
+    changeHP,
+};
+
+const enemy1 = {
+    name: 'Charmander',
+    defaultHP: 100,
+    damageHP: 100,
+    elHP: document.getElementById('health-enemy'),
+    elProgressbar: document.getElementById('progressbar-enemy'),
+    renderHP,
+    renderHPLife,
+    renderProgressbarHP,
+    changeHP,
+};
+
+const enemy2 = {
+    name: 'Bulbasaur',
+    defaultHP: 100,
+    damageHP: 100,
+    elHP: document.getElementById('health-enemy2'),
+    elProgressbar: document.getElementById('progressbar-enemy2'),
+    renderHP,
+    renderHPLife,
+    renderProgressbarHP,
+    changeHP,
+};
+
+const generateLog = (firstPerson, secondPerson, count) => {
     const { name: firstName, damageHP, defaultHP } = firstPerson;
     const { name: secondName } = secondPerson;
 
@@ -20,11 +56,9 @@ function generateLog(firstPerson, secondPerson, count) {
     ];
 
     return `${logs[random(logs.length) - 1]} -${count}, [${damageHP}/${defaultHP}]`;
-}
+};
 
-function addLog(text) {
-    $logs.insertAdjacentHTML('afterbegin', `<p>${text}</p>`);
-}
+const addLog = (text) => $logs.insertAdjacentHTML('afterbegin', `<p>${text}</p>`);
 
 function renderHPLife() {
     const { elHP, damageHP, defaultHP } = this;
@@ -63,54 +97,32 @@ function changeHP(count, enemy) {
     }
 }
 
-const character = {
-    name: 'Pikachu',
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById('health-character'),
-    elProgressbar: document.getElementById('progressbar-character'),
-    renderHP,
-    renderHPLife,
-    renderProgressbarHP,
-    changeHP,
+const countBtn = (count, $el) => {
+    const $span = $el.querySelector('.count');
+
+    return () => {
+        count--;
+        $span.innerText = count;
+
+        if (count === 0) {
+            $el.disabled = true;
+        }
+    };
 };
 
-const enemy1 = {
-    name: 'Charmander',
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById('health-enemy'),
-    elProgressbar: document.getElementById('progressbar-enemy'),
-    renderHP,
-    renderHPLife,
-    renderProgressbarHP,
-    changeHP,
-};
+const btnKickCount = countBtn(10, $btn);
+const btnSuperCount = countBtn(2, $btnSuper);
 
-const enemy2 = {
-    name: 'Bulbasaur',
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById('health-enemy2'),
-    elProgressbar: document.getElementById('progressbar-enemy2'),
-    renderHP,
-    renderHPLife,
-    renderProgressbarHP,
-    changeHP,
-};
-
-function init() {
+const init = () => {
     console.log('Start Game!');
     character.renderHP();
     enemy1.renderHP();
     enemy2.renderHP();
-}
+};
 
-function random(num) {
-    return Math.ceil(Math.random() * num);
-}
+const random = (num) => Math.ceil(Math.random() * num);
 
-function fight(damage) {
+const fight = (damage) => {
     const charDmg = random(damage);
     const enemy1Dmg = random(damage);
     const enemy2Dmg = random(damage);
@@ -118,15 +130,15 @@ function fight(damage) {
     character.changeHP(charDmg, enemy1);
     enemy1.changeHP(enemy1Dmg, character);
     enemy2.changeHP(enemy2Dmg, character);
-}
+};
 
-$btn.addEventListener('click', function () {
-    console.log('Kick: Thunder Jolt');
+$btn.addEventListener('click', () => {
+    btnKickCount();
     fight(20);
 });
 
-$btnSuper.addEventListener('click', function () {
-    console.log('Super Kick: Thunderbolt');
+$btnSuper.addEventListener('click', () => {
+    btnSuperCount();
     fight(50);
 });
 
